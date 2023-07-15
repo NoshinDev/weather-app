@@ -1,5 +1,5 @@
 import 'package:timezone/standalone.dart' as tz;
-
+import 'package:intl/intl.dart';
 class StatusWeather {
    int getTime(List<String> time, String timezone) {
     int getTime = 0;
@@ -141,5 +141,25 @@ class StatusWeather {
       default:
         return '';
     }
+  }
+    String getTimeFormat(String time) {
+    // switch (settings.timeformat) {
+    //   case '12':
+    //     return DateFormat.jm().format(DateTime.tryParse(time)!);
+    //   case '24':
+    //     return DateFormat.Hm().format(DateTime.tryParse(time)!);
+    //   default:
+        return DateFormat.Hm().format(DateTime.tryParse(time)!);
+    // }
+  }
+    String getVisibility(double length) {
+    // switch (settings.measurements) {
+    //   case 'metric':
+    //     return '${length > 1000 ? (length / 1000).round() : (length / 1000).toStringAsFixed(2)} ${'km'.tr}';
+    //   case 'imperial':
+    //     return '${length > 5280 ? (length / 5280).round() : (length / 5280).toStringAsFixed(2)} ${'mi'.tr}';
+    //   default:
+        return '${length > 1000 ? (length / 1000).round() : (length / 1000).toStringAsFixed(2)} ${'км'}';
+    // }
   }
 }

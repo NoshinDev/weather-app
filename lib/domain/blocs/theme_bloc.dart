@@ -7,33 +7,6 @@ import 'package:weather_app/domain/data_provider/theme_data_provider.dart';
 import 'package:weather_app/ui/theme/dark_theme.dart';
 import 'package:weather_app/ui/theme/light_theme.dart';
 
-  // class ThemeBloc extends Bloc<ThemeEvent, ThemeData> {
-  //   ThemeBloc() : super(ThemeData.light()) {
-  //     //when app is started
-  //     on<InitialThemeSetEvent>((event, emit) async {
-  //       final bool hasDarkTheme = await ThemeDataProvider().isDark();
-  //       if (hasDarkTheme) {
-  //         emit(kDarkTheme);
-  //       } else {
-  //         emit(kLightTheme);
-  //       }
-  //     });
-
-  //     //while switch is clicked
-  //     on<ThemeSwitchEvent>((event, emit) {
-  //       final isDark = state == kDarkTheme;
-  //       emit(isDark ? kLightTheme : kDarkTheme);
-  //       ThemeDataProvider().setTheme(isDark);
-  //     });
-  //   }
-  // }
-
-  // @immutable
-  // abstract class ThemeEvent {}
-
-  // class InitialThemeSetEvent extends ThemeEvent {}
-
-  // class ThemeSwitchEvent extends ThemeEvent {}
   
 
 class SettingCubit extends Cubit<SettingState>{

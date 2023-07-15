@@ -1,7 +1,5 @@
 
-import 'dart:convert';
 
-import 'package:http/http.dart' as http;
 import 'package:weather_app/domain/entity/weather_hourly.dart';
 import 'package:weather_app/domain/entity/main_weather.dart';
 import 'package:weather_app/domain/entity/weather_daily.dart';

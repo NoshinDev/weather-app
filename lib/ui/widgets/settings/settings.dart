@@ -3,7 +3,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 import 'package:weather_app/domain/blocs/theme_bloc.dart';
-import 'package:weather_app/domain/data_provider/theme_data_provider.dart';
 import 'package:weather_app/domain/entity/drop_down_model.dart';
 import 'package:weather_app/ui/theme/dark_theme.dart';
 import 'package:weather_app/ui/widgets/utils/card_widget.dart';
@@ -15,58 +14,46 @@ class SettingsPage extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(title: const Text('Настройки')),
-      body: ListView(
-        children: [
-          BlocBuilder<SettingCubit, SettingState>(
-            builder: (context, themeData) {
-              return SettingsTile(
-                text: 'Тёмная тема',
-                isSwitcher: true,
-                isDropDown: false,
-                isInfo: false,
-                value: themeData.theme == kDarkTheme,
-                onSwitchChange: (_) =>
-                    BlocProvider.of<SettingCubit>(context).toggleTheme(),
-              );
-            },
-          ),
-          BlocBuilder<SettingCubit, SettingState>(
+      body: Padding(
+        padding: const EdgeInsets.all(15.0),
+        child: ListView(
+          children: [
+            BlocBuilder<SettingCubit, SettingState>(
               builder: (context, themeData) {
-            return SettingsTile(
-              text: 'Тёмная тема',
-              isSwitcher: false,
-              isDropDown: true,
-              isInfo: false,
-              dropDownValueName: themeData.typeDegrees,
-              dropdownList: [
-                DropDownModel(text: 'Цельсия', value: 0),
-                DropDownModel(text: 'Фаренгейта', value: 1),
-              ],
-              onDropDownChange: (value) {
-                                        BlocProvider.of<SettingCubit>(context).changeDegrees(value??0);
+                return SettingsTile(
+                  text: 'Тёмная тема',
+                  isSwitcher: true,
+                  isDropDown: false,
+                  isInfo: false,
+                  value: themeData.theme == kDarkTheme,
+                  onSwitchChange: (_) =>
+                      BlocProvider.of<SettingCubit>(context).toggleTheme(),
+                );
               },
-            );
-          }),
-          Padding(
-            padding: const EdgeInsets.all(10.0),
-            child: CardWidget(
-              borderRadius: 15,
-              child: ListTile(
-                title: const Text('Тёмная тема'),
-                trailing: BlocBuilder<SettingCubit, SettingState>(
-                  builder: (context, themeData) {
-                    return Switch(
-                      value: themeData.theme == kDarkTheme,
-                      onChanged: (bool val) {
-                        BlocProvider.of<SettingCubit>(context).toggleTheme();
-                      },
-                    );
-                  },
-                ),
-              ),
             ),
-          ),
-        ],
+            const SizedBox(
+              height: 10,
+            ),
+            BlocBuilder<SettingCubit, SettingState>(
+                builder: (context, themeData) {
+              return SettingsTile(
+                text: 'Градусы',
+                isSwitcher: false,
+                isDropDown: true,
+                isInfo: false,
+                dropDownValueName: themeData.typeDegrees,
+                dropdownList: [
+                  DropDownModel(text: 'Цельсия', value: 0),
+                  DropDownModel(text: 'Фаренгейта', value: 1),
+                ],
+                onDropDownChange: (value) {
+                                          BlocProvider.of<SettingCubit>(context).changeDegrees(value??0);
+                },
+              );
+            }),
+            
+          ],
+        ),
       ),
     );
   }

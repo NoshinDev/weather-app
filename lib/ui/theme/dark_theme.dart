@@ -9,6 +9,7 @@ ThemeData _buildDarkTheme() {
    const inter = TextStyle(
     fontFamily: 'Inter',
     letterSpacing: 0,
+     color: Colors.white,
     decoration: TextDecoration.none,
     textBaseline: TextBaseline.alphabetic,
   );
@@ -17,6 +18,7 @@ ThemeData _buildDarkTheme() {
     fontWeight: FontWeight.w600,
     letterSpacing: 0,
     decoration: TextDecoration.none,
+    color: Colors.white,
     textBaseline: TextBaseline.alphabetic,
   );
   

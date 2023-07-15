@@ -5,88 +5,15 @@ import 'package:equatable/equatable.dart';
 
 import 'package:weather_app/domain/api_client/weather_api_client.dart';
 import 'package:weather_app/domain/entity/weather_card.dart';
-import 'package:weather_app/domain/entity/weather_hourly.dart';
 import 'package:weather_app/domain/entity/main_weather.dart';
-import 'package:weather_app/domain/entity/weather_daily.dart';
 
-abstract class WeatherMainState extends Equatable {
-  const WeatherMainState();
-}
-class WeatherInitial extends WeatherMainState {
-  @override
-  // TODO: implement props
-  List<Object?> get props => [];
-}
-// abstract class WeatherCardState extends Equatable {
-//   const WeatherCardState();
-// }
+part 'weather_event.dart';
+part 'weather_state.dart';
 
-class WeatherMainLoadingState extends WeatherMainState {
-  @override
-  List<Object> get props => [];
-}
 
-class WeatherCardLoadingState extends WeatherMainState {
-  @override
-  List<Object> get props => [];
-}
 
-// class WeatherCardDailyLoadingState extends WeatherMainState {
-//   @override
-//   List<Object> get props => [];
-// }
-
-class WeatherMainLoadedState extends WeatherMainState {
-  final MainWeather mainWeather;
-  const WeatherMainLoadedState(
-    this.mainWeather,
-  );
-  @override
-  List<Object> get props => [mainWeather];
-}
-
-class WeatherCardLoadedState extends WeatherMainState {
-  final WeatherCard weatherCard;
-  const WeatherCardLoadedState(
-    this.weatherCard,
-  );
-  @override
-  List<Object> get props => [weatherCard];
-}
-
-// class WeatherCardDailyLoadedState extends WeatherMainState {
-//   final WeatherDaily weatherCards;
-//   const WeatherCardDailyLoadedState(
-//     this.weatherCards,
-//   );
-//   @override
-//   List<Object> get props => [weatherCards];
-// }
-
-// abstract class WeathersEvents {}
-abstract class WeathersEvents extends Equatable {
-  const WeathersEvents();
-}
-
-class LoadApiEvent extends WeathersEvents {
-  @override
-  // TODO: implement props
-  List<Object?> get props => [];
-}
-
-class LoadWeatherCard extends WeathersEvents {
-  @override
-  // TODO: implement props
-  List<Object?> get props => [];
-}
-class LoadWeatherCardDaily extends WeathersEvents {
-  @override
-  // TODO: implement props
-  List<Object?> get props => [];
-}
 class WeatherMainBloc extends Bloc<WeathersEvents, WeatherMainState> {
   final WeatherApiClient _weatherApiClient;
-  // final MainWeather _mainWeather;
   WeatherMainBloc(this._weatherApiClient) : super(WeatherInitial()) {
     on<LoadApiEvent>(
       (event, emit) async {
@@ -147,36 +74,7 @@ class WeatherMainBloc extends Bloc<WeathersEvents, WeatherMainState> {
         emit(WeatherCardLoadedState(activity));
       },
     );
-    //  on<LoadWeatherCardDaily>(
-    //   (event, emit) async {
-    //     emit(WeatherCardDailyLoadingState());
-    //     final activity = await _weatherApiClient.getWeatherCardsDaily();
-
-    //     emit(WeatherCardDailyLoadedState(activity));
-    //   },
-    // );
   }
 }
 
-// class WeatherCardBloc extends Bloc<WeathersEvents, WeatherMainState> {
-//   final WeatherApiClient _weatherApiClient;
-//   // final MainWeather _mainWeather;
-//   WeatherCardBloc(this._weatherApiClient) : super(WeatherMainLoadingState()) {
-//     on<LoadApiEvent>(
-//       (event, emit) async {
-//         emit(WeatherMainLoadingState());
-//         final activity = await _weatherApiClient.getMainWeather();
 
-//         emit(WeatherMainLoadedState(activity));
-//       },
-//     );
-//     on<LoadWeatherCard>(
-//       (event, emit) async {
-//         emit(WeatherCardLoadingState());
-//         final activity = await _weatherApiClient.getWeatherCards();
-
-//         emit(WeatherCardLoadedState(activity));
-//       },
-//     );
-//   }
-// }

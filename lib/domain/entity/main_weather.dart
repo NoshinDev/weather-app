@@ -137,11 +137,11 @@ class Hourly {
   }
 
   Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
-    data['time'] = this.time;
-    data['temperature_2m'] = this.temperature2m;
-    data['weathercode'] = this.weathercode;
-    data['snow_depth'] = this.snowDepth;
+    final Map<String, dynamic> data = <String, dynamic>{};
+    data['time'] = time;
+    data['temperature_2m'] = temperature2m;
+    data['weathercode'] = weathercode;
+    data['snow_depth'] = snowDepth;
     return data;
   }
 }
