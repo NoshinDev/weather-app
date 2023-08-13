@@ -135,7 +135,7 @@ class Hourly {
   List<int>? precipitation;
   List<int>? rain;
   List<int>? weathercode;
-  List<int>? surfacePressure;
+  List<double>? surfacePressure;
   List<double>? visibility;
   List<double>? evapotranspiration;
   List<double>? windspeed10m;
@@ -169,7 +169,7 @@ class Hourly {
     precipitation = json['precipitation'].cast<int>();
     rain = json['rain'].cast<int>();
     weathercode = json['weathercode'].cast<int>();
-    surfacePressure = json['surface_pressure'].cast<int>();
+    surfacePressure = List<double>.from(json["surface_pressure"].map((x) => x));
     visibility = json['visibility'].cast<double>();
     evapotranspiration = json['evapotranspiration'].cast<double>();
     windspeed10m = json['windspeed_10m'].cast<double>();

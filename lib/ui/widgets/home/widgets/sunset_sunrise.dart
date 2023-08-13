@@ -21,17 +21,30 @@ class SunsetSunrise extends StatelessWidget {
   final String from;
   final String now;
   final String to;
-final WeatherCardLoadedState state;
-final int index;
+  final WeatherCardLoadedState state;
+  final int index;
   @override
   Widget build(BuildContext context) {
+    final sunSetValue = SunInfo().getPercent(from, now, to);
+    final List<Color> colors = sunSetValue < 100 && sunSetValue > 0
+        ? [
+            const Color.fromARGB(200, 223, 155, 27),
+            const Color.fromARGB(0, 55, 37, 4),
+          ]
+        : [
+            Color.fromARGB(118, 159, 211, 246),
+            const Color.fromARGB(0, 159, 211, 246)
+          ];
     return CardWidget(
       child: Padding(
         padding: const EdgeInsets.all(20.0),
         child: Stack(
           children: [
+            // Container(
+            //   color: Colors.amber,
+            // ),
             Transform.translate(
-              offset: Offset(0, 10),
+              offset: const Offset(0, 10),
               child: Transform.scale(
                 scaleX: 2,
                 scaleY: 2,
@@ -44,12 +57,11 @@ final int index;
                       centerY: 0,
                       labelOffset: 0.1,
                       tickOffset: 0.125,
-                      startAngle: 180,
-                      endAngle: 360,
+                      startAngle: 200,
+                      endAngle: 340,
 
                       minorTicksPerInterval: 0,
-                      labelsPosition:
-                          ElementsPosition.outside,
+                      labelsPosition: ElementsPosition.outside,
                       offsetUnit: GaugeSizeUnit.factor,
                       showAxisLine: false,
                       canScaleToFit: true,
@@ -62,51 +74,70 @@ final int index;
                       // maximum: 120,
                       pointers: <GaugePointer>[
                         WidgetPointer(
-                            // offset: isCardView ? -2.5 : -5,
-                            value: SunInfo().getPercent(
-                                from, now, to),
-                            //  _value.toDouble(),
-                            child: Center(
-                              child: Container(
+                          // offset: isCardView ? -2.5 : -5,
+                          value: (sunSetValue == 100) ? 50 : sunSetValue,
+                          //  _value.toDouble(),
+                          child: Stack(
+                            children: [
+                              Center(
+                                child: Container(
+                                  width: 30,
+                                  height: 30,
+                                  decoration: BoxDecoration(
+                                    shape: BoxShape.circle,
+                                    gradient: RadialGradient(
+                                      colors: colors,
+                                      stops: [0, 0.8],
+                                    ),
+                                  ),
+                                ),
+                              ),
+                              Center(
+                                child: Container(
                                   width: 10,
                                   height: 10,
-                                  decoration:
-                                      const BoxDecoration(
-                                    image:
-                                        DecorationImage(
+                                  decoration: BoxDecoration(
+                                    image: DecorationImage(
                                       image: ExactAssetImage(
-                                          'assets/images/clear_day.png'),
-                                      fit: BoxFit
-                                          .contain,
+                                        sunSetValue < 100 && sunSetValue > 0
+                                            ? 'assets/images/sun.png'
+                                            : 'assets/images/moon.png',
+                                      ),
+                                      fit: BoxFit.contain,
                                     ),
-                                  )),
-                            ))
+                                  ),
+                                ),
+                              ),
+                            ],
+                          ),
+                        ),
                       ],
                       ranges: <GaugeRange>[
                         GaugeRange(
-                            startValue: 0,
-                            endValue: 100,
-                            startWidth: 1,
-                            endWidth: 1,
-                            rangeOffset: 4,
-                            sizeUnit: GaugeSizeUnit
-                                .logicalPixel,
-                            gradient: SweepGradient(
-                              colors: const <Color>[
-                                // Colors.red,
-                                Colors.transparent,
-                                // Color(0xFFFFDD00),
-                                // Color(0xFFFFDD00),
-                                Colors.white30,
-                                Colors.transparent,
-                              ],
-                              stops: const <double>[
-                                0,
-                                // 0.2722222,
-                                0.5,
-                                1,
-                              ],
-                            )),
+                          startValue: 0,
+                          endValue: 100,
+                          startWidth: 1,
+                          endWidth: 1,
+                          rangeOffset: 4,
+                          sizeUnit: GaugeSizeUnit.logicalPixel,
+                          gradient: const SweepGradient(
+                            colors: <Color>[
+                              // Colors.red,
+                              Colors.transparent,
+                              // Color(0xFFFFDD00),
+                              // Color(0xFFFFDD00),
+                              Colors.white30,
+                              Colors.transparent,
+                            ],
+                            stops: <double>[
+                              0,
+                              // 0.2722222,
+                              0.5,
+                              1,
+                            ],
+                          ),
+                        ),
+
                         //   GaugeRange(
                         //     startValue: 40,
                         //     endValue: 80,
@@ -124,54 +155,39 @@ final int index;
               ),
             ),
             Column(
-              mainAxisAlignment:
-                  MainAxisAlignment.spaceBetween,
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
                 Row(
-                  mainAxisAlignment:
-                      MainAxisAlignment.spaceBetween,
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
                     SvgPicture.asset(
                       'assets/icons/sunrise.svg',
-                      color: Theme.of(context)
-                          .textTheme
-                          .bodyLarge
-                          ?.color,
+                      color: Theme.of(context).textTheme.bodyLarge?.color,
                     ),
                     SvgPicture.asset(
                       'assets/icons/sunset.svg',
-                      color: Theme.of(context)
-                          .textTheme
-                          .headlineSmall
-                          ?.color,
+                      color: Theme.of(context).textTheme.headlineSmall?.color,
                     ),
                   ],
                 ),
                 Row(
-                  mainAxisAlignment:
-                      MainAxisAlignment.spaceBetween,
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
                     Text(
-                      StatusWeather().getTimeFormat(
-                          state.weatherCard
-                              .sunrise![index]),
+                      StatusWeather()
+                          .getTimeFormat(state.weatherCard.sunrise![index]),
                       style: Theme.of(context)
                           .textTheme
                           .titleSmall
-                          ?.copyWith(
-                              color: Theme.of(context)
-                                  .hintColor),
+                          ?.copyWith(color: Theme.of(context).hintColor),
                     ),
                     Text(
-                      StatusWeather().getTimeFormat(
-                          state.weatherCard
-                              .sunset![index]),
+                      StatusWeather()
+                          .getTimeFormat(state.weatherCard.sunset![index]),
                       style: Theme.of(context)
                           .textTheme
                           .titleSmall
-                          ?.copyWith(
-                              color: Theme.of(context)
-                                  .hintColor),
+                          ?.copyWith(color: Theme.of(context).hintColor),
                     ),
                   ],
                 ),

@@ -139,6 +139,14 @@ packages:
     description: flutter
     source: sdk
     version: "0.0.0"
+  flutter_timezone:
+    dependency: "direct main"
+    description:
+      name: flutter_timezone
+      sha256: "4508018aba499c837f723e2e718259eb677410490638b7ea669b11113d083e68"
+      url: "https://pub.dev"
+    source: hosted
+    version: "1.0.7"
   flutter_wall_layout:
     dependency: "direct main"
     description:
@@ -169,7 +177,7 @@ packages:
     source: hosted
     version: "4.0.2"
   intl:
-    dependency: transitive
+    dependency: "direct main"
     description:
       name: intl
       sha256: "3bc132a9dbce73a7e4a21a17d06e1878839ffbf975568bc875c60537824b0c4d"
@@ -445,6 +453,14 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "0.5.1"
+  time_machine:
+    dependency: "direct main"
+    description:
+      name: time_machine
+      sha256: b39511bf66cc8553d86c1242c43dbf67a17c594d5d7124727c1fdbf331e3989d
+      url: "https://pub.dev"
+    source: hosted
+    version: "0.9.17"
   timezone:
     dependency: "direct main"
     description:

@@ -7,7 +7,7 @@ class WeatherCard {
   List<int>? precipitation;
   List<int>? rain;
   List<int>? weathercode;
-  List<int>? surfacePressure;
+  List<double>? surfacePressure;
   List<double>? visibility;
   List<double>? evapotranspiration;
   List<double>? windspeed10M;
@@ -15,7 +15,7 @@ class WeatherCard {
   List<double>? windgusts10M;
   List<int>? cloudcover;
   List<int>? uvIndex;
-  List<String>? timeDaily;
+  List<DateTime>? timeDaily;
   List<int>? weathercodeDaily;
   List<double>? temperature2MMax;
   List<double>? temperature2MMin;

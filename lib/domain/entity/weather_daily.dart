@@ -127,7 +127,7 @@ class DailyUnits {
 }
 
 class Daily {
-  List<String>? time;
+  List<DateTime>? time;
   List<int>? weathercode;
   List<double>? temperature2mMax;
   List<double>? temperature2mMin;
@@ -161,7 +161,7 @@ class Daily {
       this.winddirection10mDominant});
 
   Daily.fromJson(Map<String, dynamic> json) {
-    time = json['time'].cast<String>();
+    time =  List<DateTime>.from(json["time"].map((x) => DateTime.parse(x)));
     weathercode = json['weathercode'].cast<int>();
     temperature2mMax = json['temperature_2m_max'].cast<double>();
     temperature2mMin = json['temperature_2m_min'].cast<double>();

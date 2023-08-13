@@ -1,9 +1,10 @@
-
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_wall_layout/flutter_wall_layout.dart';
 import 'package:weather_app/domain/api_client/weather_api_client.dart';
 import 'package:weather_app/domain/blocs/weather/weather_bloc.dart';
+import 'package:weather_app/ui/widgets/home/widgets/weather_daily_card_list.dart';
+import 'package:weather_app/ui/widgets/utils/card_widget.dart';
 import 'package:weather_app/ui/widgets/utils/status_weather.dart';
 
 import 'sunset_sunrise.dart';
@@ -36,6 +37,31 @@ class WeatherDayBlock extends StatelessWidget {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Padding(
+                  padding: const EdgeInsets.all(10.0),
+                  child: CardWidget(
+                    child: Padding(
+                      padding: const EdgeInsets.all(15.0),
+                      child: Column(
+                        children: List.generate(
+                            state.weatherCard.timeDaily!.length,
+                            (index) => WeatherDailyCardList(
+                                  timeDaily: state.weatherCard.timeDaily![index],
+                                  weathercodeDaily:
+                                      state.weatherCard.weathercodeDaily![index],
+                                  temperature2MMax:
+                                      state.weatherCard.temperature2MMax![index],
+                                  temperature2MMin:
+                                      state.weatherCard.temperature2MMin![index],
+                                  timeDay: state.weatherCard.sunrise![(index / 24).floor()],
+                                  timeNight: state.weatherCard.sunset![(index / 24).floor()],
+                                  time: state.weatherCard.time![index],
+                                  weather: state.weatherCard.weathercode![index],
+                                )),
+                      ),
+                    ),
+                  ),
+                ),
+                Padding(
                   padding: const EdgeInsets.symmetric(horizontal: 20),
                   child: Text(
                     'О погоде',
@@ -44,6 +70,7 @@ class WeatherDayBlock extends StatelessWidget {
                 ),
                 WallLayout(
                   layersCount: 10,
+                  stonePadding: 10,
                   stones: List<Stone>.generate(
                     9,
                     (index) {
@@ -70,7 +97,7 @@ class WeatherDayBlock extends StatelessWidget {
                             width: 5,
                             height: 4,
                             child: WeatherTile(
-                              assetLink: 'assets/icons/wind.svg',
+                              assetLink: 'assets/icons/droplet.svg',
                               description: 'Влажность',
                               value:
                                   '${state.weatherCard.relativehumidity2M![time]}%',
@@ -87,7 +114,32 @@ class WeatherDayBlock extends StatelessWidget {
                                 value: StatusWeather().getVisibility(
                                     state.weatherCard.visibility![index])),
                           );
+
                         case 3:
+                          return Stone(
+                            id: index,
+                            width: 5,
+                            height: 4,
+                            child: WeatherTile(
+                              assetLink: 'assets/icons/sun.svg',
+                              description: 'УФ',
+                              value:
+                                  '${state.weatherCard.uvIndexMax![index]} ${StatusWeather().getUvIndex(state.weatherCard.uvIndexMax![index].round())}',
+                            ),
+                          );
+                        case 4:
+                          return Stone(
+                            id: index,
+                            width: 5,
+                            height: 4,
+                            child: WeatherTile(
+                              assetLink: 'assets/icons/pressure.svg',
+                              description: 'Давление воздуха',
+                              value:
+                                  '${state.weatherCard.surfacePressure![index]} гПа',
+                            ),
+                          );
+                        case 5:
                           return Stone(
                             id: index,
                             width: 5,
@@ -99,7 +151,7 @@ class WeatherDayBlock extends StatelessWidget {
                                   '${state.weatherCard.precipitationSum![index]} мм',
                             ),
                           );
-                        case 4:
+                        case 6:
                           final from = StatusWeather()
                               .getTimeFormat(state.weatherCard.sunrise![index]);
                           final to = StatusWeather()
@@ -110,7 +162,13 @@ class WeatherDayBlock extends StatelessWidget {
                             id: index,
                             width: 10,
                             height: 4,
-                            child: SunsetSunrise(from: from, now: now, to: to,index: index,state: state,),
+                            child: SunsetSunrise(
+                              from: from,
+                              now: now,
+                              to: to,
+                              index: index,
+                              state: state,
+                            ),
                           );
                         default:
                           return Stone(
@@ -132,4 +190,3 @@ class WeatherDayBlock extends StatelessWidget {
     );
   }
 }
-

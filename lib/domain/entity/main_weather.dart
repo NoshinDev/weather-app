@@ -65,7 +65,7 @@ class MainWeather {
 class CurrentWeather {
   double? temperature;
   double? windspeed;
-  double? winddirection;
+  int? winddirection;
   int? weathercode;
   int? isDay;
   String? time;

@@ -1,4 +1,4 @@
-#Wed Jul 12 18:26:53 MSK 2023
+#Sun Aug 13 14:32:09 MSK 2023
 base.0=/Users/artyomnosin/Projects/Flutter/git/weather-app/build/app/intermediates/dex/debug/mergeDexDebug/classes.dex
 renamed.0=classes.dex
 path.0=classes.dex
