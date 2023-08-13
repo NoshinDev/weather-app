@@ -1,8 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_wall_layout/flutter_wall_layout.dart';
-import 'package:weather_app/domain/api_client/weather_api_client.dart';
+import 'package:weather_app/data/repositories/weather_repository_impl.dart';
+import 'package:weather_app/di/di.dart';
+
 import 'package:weather_app/domain/blocs/weather/weather_bloc.dart';
+import 'package:weather_app/domain/repositories/weather_repository.dart';
+import 'package:weather_app/generated/l10n.dart';
 import 'package:weather_app/ui/widgets/home/widgets/weather_daily_card_list.dart';
 import 'package:weather_app/ui/widgets/utils/card_widget.dart';
 import 'package:weather_app/ui/widgets/utils/status_weather.dart';
@@ -18,10 +22,10 @@ class WeatherDayBlock extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return BlocProvider(
-      create: (context) => WeatherMainBloc(
-        RepositoryProvider.of<WeatherApiClient>(context),
-        // RepositoryProvider.of<ConnectivityService>(context),
-      )..add(LoadWeatherCard()),
+      create: (context) => WeatherMainBloc(instance<WeatherRepository>()
+          // RepositoryProvider.of<ConnectivityService>(context),
+          )
+        ..add(LoadWeatherCard()),
       child: BlocBuilder<WeatherMainBloc, WeatherMainState>(
         builder: (context, state) {
           if (state is WeatherCardLoadingState) {
@@ -45,17 +49,21 @@ class WeatherDayBlock extends StatelessWidget {
                         children: List.generate(
                             state.weatherCard.timeDaily!.length,
                             (index) => WeatherDailyCardList(
-                                  timeDaily: state.weatherCard.timeDaily![index],
-                                  weathercodeDaily:
-                                      state.weatherCard.weathercodeDaily![index],
-                                  temperature2MMax:
-                                      state.weatherCard.temperature2MMax![index],
-                                  temperature2MMin:
-                                      state.weatherCard.temperature2MMin![index],
-                                  timeDay: state.weatherCard.sunrise![(index / 24).floor()],
-                                  timeNight: state.weatherCard.sunset![(index / 24).floor()],
+                                  timeDaily:
+                                      state.weatherCard.timeDaily![index],
+                                  weathercodeDaily: state
+                                      .weatherCard.weathercodeDaily![index],
+                                  temperature2MMax: state
+                                      .weatherCard.temperature2MMax![index],
+                                  temperature2MMin: state
+                                      .weatherCard.temperature2MMin![index],
+                                  timeDay: state.weatherCard
+                                      .sunrise![(index / 24).floor()],
+                                  timeNight: state.weatherCard
+                                      .sunset![(index / 24).floor()],
                                   time: state.weatherCard.time![index],
-                                  weather: state.weatherCard.weathercode![index],
+                                  weather:
+                                      state.weatherCard.weathercode![index],
                                 )),
                       ),
                     ),
@@ -64,7 +72,7 @@ class WeatherDayBlock extends StatelessWidget {
                 Padding(
                   padding: const EdgeInsets.symmetric(horizontal: 20),
                   child: Text(
-                    'О погоде',
+                    S.of(context).about_weather,
                     style: Theme.of(context).textTheme.headlineSmall,
                   ),
                 ),
@@ -83,7 +91,7 @@ class WeatherDayBlock extends StatelessWidget {
                             child: WeatherTile(
                               assetLink:
                                   'assets/icons/temperature-three-quarter.svg',
-                              description: 'Ощущается как',
+                              description: S.of(context).evapotranspiration,
                               value:
                                   (state.weatherCard.evapotranspiration![time] *
                                           100)
@@ -98,9 +106,10 @@ class WeatherDayBlock extends StatelessWidget {
                             height: 4,
                             child: WeatherTile(
                               assetLink: 'assets/icons/droplet.svg',
-                              description: 'Влажность',
-                              value:
-                                  '${state.weatherCard.relativehumidity2M![time]}%',
+                              description: S.of(context).humidity,
+                              value: state.weatherCard.relativehumidity2M![time]
+                                  .toString(),
+                              message: ' %',
                             ),
                           );
                         case 2:
@@ -109,10 +118,12 @@ class WeatherDayBlock extends StatelessWidget {
                             width: 5,
                             height: 4,
                             child: WeatherTile(
-                                assetLink: 'assets/icons/eye.svg',
-                                description: 'Видимость',
-                                value: StatusWeather().getVisibility(
-                                    state.weatherCard.visibility![index])),
+                              assetLink: 'assets/icons/eye.svg',
+                              description: S.of(context).visability,
+                              value: StatusWeather().getVisibility(
+                                state.weatherCard.visibility![index],
+                              ),
+                            ),
                           );
 
                         case 3:
@@ -122,9 +133,12 @@ class WeatherDayBlock extends StatelessWidget {
                             height: 4,
                             child: WeatherTile(
                               assetLink: 'assets/icons/sun.svg',
-                              description: 'УФ',
-                              value:
-                                  '${state.weatherCard.uvIndexMax![index]} ${StatusWeather().getUvIndex(state.weatherCard.uvIndexMax![index].round())}',
+                              description: S.of(context).uv,
+                              value: state.weatherCard.uvIndexMax![index]
+                                  .toString(),
+                              message: StatusWeather().getUvIndex(
+                                state.weatherCard.uvIndexMax![index].round(),
+                              ),
                             ),
                           );
                         case 4:
@@ -134,9 +148,10 @@ class WeatherDayBlock extends StatelessWidget {
                             height: 4,
                             child: WeatherTile(
                               assetLink: 'assets/icons/pressure.svg',
-                              description: 'Давление воздуха',
+                              description: S.of(context).surface_pressure,
                               value:
-                                  '${state.weatherCard.surfacePressure![index]} гПа',
+                                  state.weatherCard.surfacePressure![index].toString(),
+                                  message: 'гПа',
                             ),
                           );
                         case 5:
@@ -146,9 +161,10 @@ class WeatherDayBlock extends StatelessWidget {
                             height: 4,
                             child: WeatherTile(
                               assetLink: 'assets/icons/cloud-showers-alt.svg',
-                              description: 'Осадки',
+                              description: S.of(context).precipitation,
                               value:
-                                  '${state.weatherCard.precipitationSum![index]} мм',
+                                  state.weatherCard.precipitationSum![index].toString(),
+                                  message: 'мм',
                             ),
                           );
                         case 6:

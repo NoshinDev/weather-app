@@ -3,7 +3,7 @@
 import 'package:bloc/bloc.dart';
 import 'package:flutter/material.dart';
 
-import 'package:weather_app/domain/data_provider/theme_data_provider.dart';
+import 'package:weather_app/data/data_provider/theme_data_provider.dart';
 import 'package:weather_app/ui/theme/dark_theme.dart';
 import 'package:weather_app/ui/theme/light_theme.dart';
 

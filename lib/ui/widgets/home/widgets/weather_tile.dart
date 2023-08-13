@@ -1,5 +1,7 @@
+// ignore_for_file: public_member_api_docs, sort_constructors_first
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
+
 import 'package:weather_app/ui/widgets/utils/card_widget.dart';
 import 'package:weather_app/ui/widgets/utils/status_weather.dart';
 
@@ -7,11 +9,13 @@ class WeatherTile extends StatelessWidget {
   final String assetLink;
   final String description;
   final String value;
+   final String? message;
   const WeatherTile({
     Key? key,
     required this.assetLink,
     required this.description,
     required this.value,
+    this.message,
   }) : super(key: key);
 
   @override
@@ -38,9 +42,21 @@ class WeatherTile extends StatelessWidget {
                       .titleSmall
                       ?.copyWith(color: Theme.of(context).hintColor),
                 ),
-                Text(
-                  value,
-                  style: Theme.of(context).textTheme.headlineSmall,
+                Row(
+                  crossAxisAlignment: CrossAxisAlignment.end,
+                  children: [
+                    Text(
+                      value,
+                      style: Theme.of(context).textTheme.headlineSmall,
+                    ),
+                    const SizedBox(width: 2,),
+                    message!=null
+                    ? Text(
+                      message!,
+                      style: Theme.of(context).textTheme.labelLarge,
+                    )
+                    :const SizedBox.shrink(),
+                  ],
                 ),
               ],
             ),

@@ -3,9 +3,11 @@
 
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:weather_app/data/repositories/weather_repository_impl.dart';
+import 'package:weather_app/di/di.dart';
 
-import 'package:weather_app/domain/api_client/weather_api_client.dart';
 import 'package:weather_app/domain/blocs/weather/weather_bloc.dart';
+import 'package:weather_app/domain/repositories/weather_repository.dart';
 
 import 'widgets/weather_app_bar.dart';
 import 'widgets/weather_day_bloc.dart';
@@ -44,7 +46,7 @@ class _HomePageState extends State<HomePage> {
   Widget build(BuildContext context) {
     return BlocProvider(
       create: (context) => WeatherMainBloc(
-        RepositoryProvider.of<WeatherApiClient>(context),
+        instance<WeatherRepository>()
         // RepositoryProvider.of<ConnectivityService>(context),
       )..add(LoadApiEvent()),
       // ..add(LoadWeatherCardHourly()),

@@ -43,8 +43,14 @@ class WeatherAppBar extends StatelessWidget {
               centerTitle: true,
               shadowColor: Colors.transparent,
               scrolledUnderElevation: 0,
-              elevation: 0,
-              iconTheme: const IconThemeData(color: Colors.black),
+              shape: Border(
+    bottom: BorderSide(
+      color:  Theme.of(context).hintColor.withOpacity(ts!.clamp(0, 0.5)),
+      width: 1
+    )
+  ),
+  elevation: 2,
+              iconTheme:  IconThemeData(color: Theme.of(context).hintColor),
               // title: _showAppBarTitle ? const Text('App Bar Title') : null,
               actions: [
                 InkWell(
@@ -61,7 +67,14 @@ class WeatherAppBar extends StatelessWidget {
               snap: true,
               floating: true,
               expandedHeight: kExpandedHeight,
-              backgroundColor: Colors.blue.withOpacity(ts!.clamp(0, 1)),
+              backgroundColor: Theme.of(context).scaffoldBackgroundColor.withOpacity(ts!.clamp(0, 1)),
+  //             bottom: PreferredSize(
+  //    preferredSize: const Size.fromHeight(00.0),
+  //    child: Container(
+  //       color: Theme.of(context).focusColor.withOpacity(ts!.clamp(0, 1)),
+  //       height: 1.0,
+  //    ),
+  //  ),
               flexibleSpace:
                   // _showAppBarTitle
                   //     ? null
@@ -74,7 +87,7 @@ class WeatherAppBar extends StatelessWidget {
                 // centerTitle: true,
                 // centerTitle: true,
                 title: Text(
-                  "Германия",
+                  "Москва",
                   style: Theme.of(context).textTheme.headlineSmall,
                 ),
                 stretchModes: const <StretchMode>[

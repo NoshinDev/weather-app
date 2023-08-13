@@ -1,6 +1,9 @@
+import 'package:get_it/get_it.dart';
 import 'package:timezone/standalone.dart' as tz;
 import 'package:intl/intl.dart';
+import 'package:weather_app/generated/l10n.dart';
 class StatusWeather {
+       static final S l10 = GetIt.instance<S>();
    int getTime(List<String> time, String timezone) {
     int getTime = 0;
     for (var i = 0; i < time.length; i++) {
@@ -140,58 +143,58 @@ class StatusWeather {
   }
     String getUvIndex(int uvIndex) {
     if (uvIndex < 3) {
-      return 'uvLow';
+      return l10.uv_low;
     } else if (uvIndex < 6) {
-      return 'uvAverage';
+      return l10.uv_average;
     } else if (uvIndex < 8) {
-      return 'uvHigh';
+      return l10.uv_high;
     } else if (uvIndex < 11) {
-      return 'uvVeryHigh';
+      return l10.uv_very_high;
     } else {
-      return 'uvExtreme';
+      return l10.uv_extreme;
     }
   }
   String getText(int weather) {
     switch (weather) {
       case 0:
-        return 'clear_sky';
+        return l10.clear_sky;
       case 1:
       case 2:
-        return 'cloudy';
+        return l10.cloudy;
       case 3:
-        return 'overcast';
+        return l10.overcast;
       case 45:
       case 48:
-        return 'fog';
+        return l10.fog;
       case 51:
       case 53:
       case 55:
-        return 'drizzle';
+        return l10.drizzle;
       case 56:
       case 57:
-        return 'drizzling_rain';
+        return l10.drizzling_rain;
       case 61:
       case 63:
       case 65:
-        return 'rain';
+        return l10.rain;
       case 66:
       case 67:
-        return 'freezing_rain';
+        return l10.freezing_rain;
       case 80:
       case 81:
       case 82:
-        return 'heavy_rains';
+        return l10.heavy_rains;
       case 71:
       case 73:
       case 75:
       case 77:
       case 85:
       case 86:
-        return 'snow';
+        return l10.snow;
       case 95:
       case 96:
       case 99:
-        return 'thunderstorm';
+        return l10.thunderstorm;
       default:
         return '';
     }

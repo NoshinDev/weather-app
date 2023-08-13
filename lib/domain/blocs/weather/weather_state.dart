@@ -2,6 +2,8 @@ part of 'weather_bloc.dart';
 
 abstract class WeatherMainState extends Equatable {
   const WeatherMainState();
+    @override
+  List<Object?> get props => [];
 }
 class WeatherInitial extends WeatherMainState {
   @override
@@ -33,4 +35,12 @@ class WeatherCardLoadedState extends WeatherMainState {
   );
   @override
   List<Object> get props => [weatherCard];
+}
+class WeatherCardLoadingFailure extends WeatherMainState {
+  const WeatherCardLoadingFailure(this.exception);
+
+  final Object exception;
+
+  @override
+  List<Object?> get props => super.props..add(exception);
 }

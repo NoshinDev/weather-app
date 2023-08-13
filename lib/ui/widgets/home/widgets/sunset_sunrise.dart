@@ -75,7 +75,7 @@ class SunsetSunrise extends StatelessWidget {
                       pointers: <GaugePointer>[
                         WidgetPointer(
                           // offset: isCardView ? -2.5 : -5,
-                          value: (sunSetValue == 100) ? 50 : sunSetValue,
+                          value: (sunSetValue == 100||sunSetValue==0) ? 50 : sunSetValue,
                           //  _value.toDouble(),
                           child: Stack(
                             children: [
@@ -158,6 +158,7 @@ class SunsetSunrise extends StatelessWidget {
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
                 Row(
+                  textDirection: (sunSetValue == 100||sunSetValue==0) ?TextDirection.rtl:TextDirection.ltr,
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
                     SvgPicture.asset(
@@ -171,6 +172,7 @@ class SunsetSunrise extends StatelessWidget {
                   ],
                 ),
                 Row(
+                  textDirection:  (sunSetValue == 100||sunSetValue==0) ?TextDirection.rtl:TextDirection.ltr,
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
                     Text(
